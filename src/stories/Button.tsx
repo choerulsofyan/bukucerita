@@ -3,17 +3,21 @@ import './button.css';
 
 interface ButtonProps {
   /**
-   * Is this the principal call to action on the page?
+   * Is this button has outline style?
    */
-  primary?: boolean;
+  isOutlined?: boolean;
   /**
-   * What background color to use
+   * What button color to use
+   */
+  color?: 'primary' | 'secondary' | 'success' | 'danger' | 'warning' | 'info' | 'dark' | 'link';
+  /**
+   * What button color to use
    */
   backgroundColor?: string;
   /**
    * How large should the button be?
    */
-  size?: 'sm' | 'lg' | 'default';
+  size?: 'sm' | 'default' | 'lg';
   /**
    * Button contents
    */
@@ -28,17 +32,23 @@ interface ButtonProps {
  * Primary UI component for user interaction
  */
 export const Button = ({
-  primary = false,
+  isOutlined = false,
   size = undefined,
+  color = undefined,
   backgroundColor,
   label,
   ...props
 }: ButtonProps) => {
-  const mode = primary ? 'btn btn-primary' : 'btn btn-secondary';
+  color = color ? color : 'secondary';
+  const outline = isOutlined ? 'outline-' : '';
   return (
     <button
       type="button"
-      className={['btn', size !== 'default' ? `btn-${size}` : '', mode].join(' ')}
+      className={[
+        'btn',
+        size ? `btn-${size}` : '',
+        color ? `btn-${outline}${color}` : ''
+      ].join(' ')}
       style={{ backgroundColor }}
       {...props}
     >
